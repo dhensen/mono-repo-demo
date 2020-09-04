@@ -3,7 +3,7 @@ upstream frontend {
 }
 
 upstream backend {
-    server portaal_backend:8084;
+    server portaal_backend:8000;
 }
 
 server {

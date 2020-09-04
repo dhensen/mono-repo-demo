@@ -5,7 +5,7 @@ import os
 app = Sanic("App Name")
 
 
-@app.route("/")
+@app.route("/api")
 async def test(request):
     return json({"hello": "world"})
 

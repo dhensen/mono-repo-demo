@@ -1,12 +1,22 @@
-de frontend is nogal zielig en heeft liefde nodig...
-
-<script>
-  setTimeout(() => {
-    fetch("http://localhost:8080/")
-      .then((response) => response.json())
-      .then((data) => {
-        document.write(data);
-        console.log(data);
-      });
-  }, 5000);
-</script>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1>de frontend is nogal zielig en heeft liefde nodig...</h1>
+    <pre id="console"></pre>
+    <script>
+      setInterval(() => {
+        fetch("http://localhost:8080/api")
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("console").append(JSON.stringify(data));
+          });
+      }, 1000);
+    </script>
+  </body>
+</html>
