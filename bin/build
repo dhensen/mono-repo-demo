@@ -43,6 +43,7 @@ def build(service, version):
         "docker build -f services/{service}/Dockerfile -t demo/{service}:{version} ."
         .format(service=service, version=version))
     save_version(service, version)
+    save_versions_env(versions)
 
 
 def save_version(service, version):
@@ -50,6 +51,14 @@ def save_version(service, version):
     with open('versions.json', mode='w') as versions_file:
         versions[service] = version
         json.dump(versions, versions_file)
+
+
+def save_versions_env(versions):
+    with open('.env', mode='w') as versions_env_file:
+        versions_env_file.write('# AuTo-GeneRaT3D do not modify!!!1111one\n')
+        for service, version in versions.items():
+            version_line = f'{service.upper()}_VERSION={version}\n'
+            versions_env_file.write(version_line)
 
 
 def get_version(service) -> Union[str, None]:
