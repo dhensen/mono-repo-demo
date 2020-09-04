@@ -1,0 +1,12 @@
+de frontend is nogal zielig en heeft liefde nodig...
+
+<script>
+  setTimeout(() => {
+    fetch("http://localhost:8080/")
+      .then((response) => response.json())
+      .then((data) => {
+        document.write(data);
+        console.log(data);
+      });
+  }, 5000);
+</script>

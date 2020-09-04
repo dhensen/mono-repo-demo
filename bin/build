@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# TODO: account for dirty working tree
+VERSION=$(git rev-parse --short HEAD)
+
+
+docker build -f services/portaal_backend/Dockerfile -t demo/portaal_backend:${VERSION} .
+
+docker build -f services/portaal_frontend/Dockerfile -t demo/portaal_frontend:${VERSION} .
+
+docker build -f services/nginx/Dockerfile -t demo/nginx:${VERSION} .
+
+docker build -f services/postgres/Dockerfile -t demo/postgres:${VERSION} .
+
+docker images | grep demo
