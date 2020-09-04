@@ -8,7 +8,7 @@ services:
       PORTAAL_BACKEND_PORT: 8000
 
   portaal_frontend:
-    image: demo/portaal_FRONTEND:${PORTAAL_FRONTEND_VERSION}
+    image: demo/portaal_frontend:${PORTAAL_FRONTEND_VERSION}
     restart: always
 
   nginx:

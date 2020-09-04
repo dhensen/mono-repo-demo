@@ -7,4 +7,4 @@ COPY src/portaal_frontend /src
 
 EXPOSE 5000
 
-CMD "serve /src"
+CMD ["serve", "/src"]
