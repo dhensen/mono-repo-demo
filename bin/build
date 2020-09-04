@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import subprocess
+import sys
 import json
 from typing import Union
 
@@ -18,6 +19,11 @@ def run(command) -> subprocess.CompletedProcess:
         stdout=subprocess.PIPE,
         universal_newlines=True,
     )
+
+
+def is_working_tree_dirty():
+    res = run('git status --porcelain')
+    return bool(res.stdout)
 
 
 def get_commit_hash(ref='HEAD') -> str:
@@ -57,16 +63,21 @@ def get_version(service) -> Union[str, None]:
     return versions.get(service, None)
 
 
-current_commit_hash = get_commit_hash()
-print(f'current commit hash: {current_commit_hash}')
+if __name__ == "__main__":
+    current_commit_hash = get_commit_hash()
+    print(f'current commit hash: {current_commit_hash}')
 
-for service in services:
-    last_service_version = get_version(service)
-    print(f'- {service} ({last_service_version}):')
+    if is_working_tree_dirty():
+        print('your working tree is dirty, commit and/or cleanup first')
+        sys.exit(1)
 
-    if not last_service_version or is_changed_since(last_service_version,
-                                                    f'src/{service}'):
-        print(f'\REQUIRES REBUILD')
-        build(service, current_commit_hash)
-    else:
-        print(f'\tNO CHANGE DETECTED')
+    for service in services:
+        last_service_version = get_version(service)
+        print(f'- {service} ({last_service_version}):')
+
+        if not last_service_version or is_changed_since(
+                last_service_version, f'src/{service}'):
+            print(f'\REQUIRES REBUILD')
+            build(service, current_commit_hash)
+        else:
+            print(f'\tNO CHANGE DETECTED')
