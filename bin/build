@@ -62,11 +62,11 @@ print(f'current commit hash: {current_commit_hash}')
 
 for service in services:
     last_service_version = get_version(service)
-    print(f'- {service}:')
+    print(f'- {service} ({last_service_version}):')
 
     if not last_service_version or is_changed_since(last_service_version,
                                                     f'src/{service}'):
-        print(f'\tservice {service} requires a build')
+        print(f'\REQUIRES REBUILD')
         build(service, current_commit_hash)
     else:
-        print(f'\tservice {service} is not changed')
+        print(f'\tNO CHANGE DETECTED')
